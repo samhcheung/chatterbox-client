@@ -49,11 +49,17 @@ body {
 form {
     padding: 20px;
     padding: 10px 10px;
+    width: 500px;
+    margin: auto;
+    text-align: left;
+    background: white;
+    padding: 10px 60px;
+    border: solid #ddd;
+    border-width: 0 1px 1px 1px;
 }
 
 form input[type=text] {
     margin-right: 10px;
-    
     width: 500px;
     font-size: 12px;
     padding: 5px;
@@ -86,5 +92,15 @@ form input[type=text] {
 .friend {
     color: #fff;
     background-color: #0090da;
+}
+
+#roomSelect {
+    width: 500px;
+    margin: auto;
+    text-align: left;
+    background: white;
+    padding: 20px 60px;
+    border: solid #ddd;
+    border-width: 0 1px 1px 1px;
 }
 
