@@ -6,8 +6,6 @@ app.server = 'https://api.parse.com/1/classes/messages';
 
 
 app.init = function () {
-  $('.username').click(app.addFriend);
-  $('#send .submit').submit(app.handleSubmit());
 
 };
 
@@ -34,11 +32,10 @@ app.fetch = function () {
     type: 'GET',
     contentType: 'application/json',
     success: function (data) {
-      console.log(data.results);
       var arr = data.results;
       for ( var i = 0; i < arr.length; i++) {
         app.addMessage(arr[i]);
-      };
+      }
     },
     error: function (data) {
       // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
@@ -69,15 +66,21 @@ app.addFriend = function() {
 
 app.handleSubmit = function() {
   // upon button click
-  app.send($('#message').val());
-
+  var message = {};
+  message.username = window.location.search.slice(10);
+  message.text = $('#message').val();
+  app.send(message);
 };
 
 $(document).ready(function () {
-
+  $('form').on('submit', function(e) {
+    e.preventDefault();
+    app.handleSubmit();
+  });
   app.fetch();
-  app.init();
   $('.username').click(app.addFriend);
+
+  setInterval( app.fetch, 1000);
 });
 
 
