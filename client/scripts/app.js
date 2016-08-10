@@ -46,7 +46,7 @@ app.fetch = function () {
       }
 
       arr = arr.filter( function(x) {
-        if ( app.currentRoom === 'lobby' || x.roomname === app.currentRoom) {
+        if ( app.currentRoom === 'lobby' || app.currentRoom === 'Lobby' || x.roomname === app.currentRoom) {
           return true;
         }
       });
@@ -127,6 +127,7 @@ app.handleSubmit = function() {
   var message = {};
   message.username = decodeURI (window.location.search.slice(10));
   message.text = $('#message').val();
+  message.roomname = app.currentRoom;
   app.send(message);
   $('#message').val('');
 };
@@ -160,10 +161,19 @@ $(document).ready(function () {
     $('[data-username="' + name + '"]').find('.username').toggleClass('friend');
   });
   $('#roomSelect').on('change', function(e) {
-    app.currentRoom = this.value;
-    // app.fetch();
-  });
+    if ( this.value === 'Make new room') {
+      var newRoom = prompt('Please enter a new room name');
+      app.addRoom(newRoom);
+      app.rooms[newRoom] = true;
+      $('#roomSelect').val(newRoom);
+      app.currentRoom = newRoom;
+    } else {
+      app.currentRoom = this.value;
+    }
 
+
+  });
+  $('#roomSelect').val('lobby');
   setInterval(app.fetch, 1000);
   
 });
